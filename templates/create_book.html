@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header text-center"><h3>Create New Book</h3></div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-control">
+                                <label for="{{ form.title.id_for_label }}">Title:</label>
+                                {{ form.title }}
+                            </div>
+                            <div class="form-control">
+                                <label for="{{ form.summary.id_for_label }}">Summary:</label>
+                                {{ form.summary }}
+                            </div>
+                            <div class="form-control">
+                                <label for="{{ form.isbn.id_for_label }}">ISBN:</label>
+                                {{ form.isbn }}
+                            </div>
+                            <div class="form-control">
+                                <label for="{{ form.available.id_for_label }}">Available:</label>
+                                {{ form.available }}
+                            </div>
+                            <div class="form-control">
+                                <label for="{{ form.published_date.id_for_label }}">Published Date:</label>
+                                {{ form.published_date }}
+                            </div>
+                            <div class="form-control">
+                                <label for="{{ form.publisher.id_for_label }}">Publisher:</label>
+                                {{ form.publisher }}
+                            </div>
+                            <div class="form-control">
+                                <label for="{{ form.genres.id_for_label }}">Genres:</label>
+                                {{ form.genres }}
+                            </div>
+                            <div class="form-control">
+                                <label for="{{ form.authors.id_for_label }}">Authors:</label>
+                                {{ form.authors }}
+                            </div>
+                            <button type="submit" class="btn btn-secondary ml-2">Create</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

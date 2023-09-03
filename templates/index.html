@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Library System</title>
+    <style>
+        body {
+            background-image: url("https://trumpwallpapers.com/wp-content/uploads/Library-Wallpaper-40-3840x2560-1-scaled.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: white;
+            font-size: 36px;
+            text-align: center;
+        }
+
+        a {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Library System</h1>
+    <a href="{% url 'home' %}">Go to Home Page(tap me)</a>
+</body>
+</html>

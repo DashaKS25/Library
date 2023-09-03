@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Borrow History</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Status</th>
+                <th>Request date</th>
+                <th>Approval date</th>
+                <!--add another -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in borrow_requests %}
+                <tr>
+                    <td>{{ request.book.title }}</td>
+                    <td>{{ request.get_status_display }}</td>
+                    <td>{{ request.request_date }}</td>
+                    <td>{{ request.approval_date }}</td>
+                    <!-- add another -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<footer style="text-align: center; color: white;">
+    <h1> Book List </h1>
+</footer>
+    <table class="table ">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Authors</th>
+                <th>Summary</th>
+                <th>Status</th>
+                <th>Actions</th>
+                <th>       </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td><a href="{% url 'Books:book_detail' book.id %}" class="font-monospace text-dark">{{ book.title }} </a></td>
+                    <td>{{ book.authors.all|join:", " }}</td>
+                    <td>{{ book.summary }}</td>
+                    <td>
+                        {% if book.available %}
+                            Available
+                        {% else %}
+                            Not Available
+                        {% endif %}
+                    </td>
+                    <td>
+                        <td>
+                            {% if user_can_edit %}
+                                <a href="{% url 'Books:update_book' book.id %}" class="btn btn-secondary ml-2">Update</a>
+                                <a href="{% url 'Books:confirm_delete_book' book.id %}" class="btn btn-danger">Delete</a>
+                            {% endif %}
+                        </td>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+

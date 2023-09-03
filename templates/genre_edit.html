@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1 class="mb-4">Edit Genre</h1>
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+      </div>
+      <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+    </form>
+    <form method="post" action="{% url 'Books:genre_delete' genre.pk %}" class="mt-3">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger btn-sm">Delete Genre</button>
+    </form>
+  </div>
+{% endblock %}

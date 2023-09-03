@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Borrow Requests</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Borrower</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in borrow_requests %}
+                <tr>
+                    <td>{{ request.book.title }}</td>
+                    <td>{{ request.borrower.username }}</td>
+                    <td>{{ request.get_status_display }}</td>
+                    <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="request_id" value="{{ request.id }}">
+                            <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
+                            <button type="submit" name="action" value="decline" class="btn btn-danger">Decline</button>
+                            <button type="submit" name="action" value="delete" class="btn btn-warning">Delete</button>
+                            
+                            {% if request.status == 'returned' %}
+                                <button type="submit" name="action" value="return" class="btn btn-info">Return</button>
+                            {% endif %}
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+

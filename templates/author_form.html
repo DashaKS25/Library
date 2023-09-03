@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Add Author{% endblock %}
+
+{% block content %}
+    <h1>Add Author</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+    </form>
+    <a href="{% url 'Books:author_list' %}" class="btn btn-secondary btn-sm">Back to Author List</a>
+{% endblock %}
