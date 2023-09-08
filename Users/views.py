@@ -3,11 +3,16 @@ from django.shortcuts import render, redirect
 from .forms import RegistrationForm, EditProfileForm
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView, View, TemplateView, UpdateView, DeleteView, FormView
-from .models import Book, BorrowRequest 
+from .models import Book, BorrowRequest , Author
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView, LoginView
 from django.contrib import messages
+from rest_framework import viewsets, status 
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from .serializers import AuthorSerializer, BookSerializer
+
 
 
 UserModel = get_user_model()
@@ -101,4 +106,36 @@ class DeleteUserProfile(DeleteView):
     pk_url_kwarg = 'pk'
 
 
+class AuthorViewSet(viewsets.ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
 
+    @action(detail=True, methods=(['get']))
+    def books (self, request, pk=None):
+        author = self.get_object()
+        book_name = request.query_params.get('book_name', '')
+        books = author.books.filter(title__icontains=book_name)
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data)
+    
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    @action(detail=False, methods=['get'])
+    def filter_by_author_age(self, request):
+        author_age = request.query_params.get('author_age', '')
+        if author_age.isdigit():
+            books = Book.objects.filter(authors__bio__icontains=f'age: {author_age}')
+            serializer = BookSerializer(books, many=True)
+            return Response(serializer.data)
+        return Response([])
+
+    def create(self, request, *args, **kwargs):
+        request.data['title'] += '!'
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

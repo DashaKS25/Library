@@ -6,6 +6,7 @@ User = get_user_model()
 class Author(models.Model):
     name=models.CharField(max_length=255)
     bio=models.TextField()
+    age = models.IntegerField(default=0)
      
     def __str__(self):
         return self.name
@@ -26,7 +27,7 @@ class Book(models.Model):
     published_date = models.DateField()  
     publisher = models.CharField(max_length=255)  
     genres = models.ManyToManyField(Genre, blank=True)  
-    authors = models.ManyToManyField(Author)  
+    authors = models.ManyToManyField(Author, related_name='books')
     borrower = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
