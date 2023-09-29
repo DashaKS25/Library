@@ -22,7 +22,7 @@ class LoginView(LoginView):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user :
             login(request, user)
             return redirect('home')
         else:
@@ -63,9 +63,8 @@ class RegistrationView(FormView):
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
-class LibrarianMenuView(View):
-    def get(self, request):
-        return render(request, 'librarian_menu.html')
+class LibrarianMenuView(TemplateView):
+    template_name = 'librarian_menu.html'
 
 class UserOfficeView(LoginRequiredMixin, View):
     template_name = 'user_office.html'
