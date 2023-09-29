@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 app_name = "Books"
@@ -20,5 +21,5 @@ urlpatterns = [
     path('genres/<int:pk>/edit/', views.GenreEditView.as_view(), name='genre_edit'),
     path('authors/<int:pk>/delete/', views.AuthorDeleteView.as_view(), name='author_delete'),
     path('genres/<int:pk>/delete/', views.GenreDeleteView.as_view(), name='genre_delete'),
-   
+
 ]

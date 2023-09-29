@@ -1,14 +1,12 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Book, Genre, Author
 
+UserModel = get_user_model()
 
-UserModel=get_user_model()
 
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
-
 
     class Meta:
         model = UserModel
@@ -17,5 +15,5 @@ class RegistrationForm(forms.ModelForm):
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
-        model = UserModel  
+        model = UserModel
         fields = ('username', 'first_name', 'last_name')

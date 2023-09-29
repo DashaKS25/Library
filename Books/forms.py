@@ -1,10 +1,8 @@
+from Users.models import Book, Genre, Author
 from django import forms
 from django.contrib.auth import get_user_model
-from Users.models import Book, Genre, Author
 
-
-UserModel=get_user_model()
-
+UserModel = get_user_model()
 
 
 class BookForm(forms.ModelForm):
@@ -15,10 +13,12 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = '__all__'
 
+
 class AuthorForm(forms.ModelForm):
     class Meta:
-        model= Author
+        model = Author
         fields = ['name', 'bio']
+
 
 class GenreForm(forms.ModelForm):
     class Meta:
