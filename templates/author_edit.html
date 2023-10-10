@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Author{% endblock %}
+
+{% block content %}
+  <h1>Edit Author</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-secondary btn-sm">Save Changes</button>
+  </form>
+  <a href="{% url 'Books:author_list' %}" class="btn btn-secondary btn-sm">Back to Author List</a>
+  
+  <form method="post" action="{% url 'Books:author_delete' author.pk %}" class="mt-3">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-sm">Delete Author</button>
+  </form>
+{% endblock %}

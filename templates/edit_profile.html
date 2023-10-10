@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Edit Profile - {{ user.username }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-secondary btn-sm">Save Changes</button>
+  </form>
+
+  <div class="text mt-3">
+    <a href="{% url 'Users:delete_profile' user.pk %}" class="btn btn-secondary btn-sm">Delete</a>
+    <a href="{% url 'Users:change_password' %}" class="btn btn-secondary btn-sm">Change Password</a>
+  </div>
+{% endblock %}
+

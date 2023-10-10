@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Book Detail: {{ book.title }}</h2>
+  <p><strong>Genre(s):</strong> {{ book.genres.all|join:", " }}</p>
+  <p><strong>Author(s):</strong> {{ book.authors.all|join:", " }}</p>
+  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+  <p><strong>Publication Date:</strong> {{ book.publication_date }}</p>
+  <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+  <p><strong>Summary:</strong> {{ book.summary }}</p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Due Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if borrow_request %}
+        <tr>
+          <td>{{ borrow_request.get_status_display }}</td>
+          {% if borrow_request.status == 'approve' %}
+            <td>{{ borrow_request.due_date }}</td>
+            <td>
+              <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="collect_book" class="btn btn-primary">Collect Book</button>
+              </form>
+            </td>
+          {% elif borrow_request.status == 'completed' %}
+            <td></td>
+            <td>
+              <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="return_book" class="btn btn-success">Return Book</button>
+              </form>
+            </td>
+          {% else %}
+            <td></td>
+            <td></td>
+          {% endif %}
+        </tr>
+      {% else %}
+        <tr>
+          <td>Available</td>
+          <td></td>
+          <td>
+            <form method="post">
+              {% csrf_token %}
+              <input type="number" name="borrow_days" placeholder="Borrow Days" required>
+              <button type="submit" name="create_borrow_request" class="btn btn-primary">Request Borrow</button>
+            </form>
+          </td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'Books:book_list' %}" class="btn btn-secondary">Back to Book List</a>
+  
+{% endblock %}
